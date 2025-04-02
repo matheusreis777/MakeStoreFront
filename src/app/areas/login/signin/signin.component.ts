@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         this.toastr.success('Login realizado com sucesso!', 'Sucesso!');
-
+        console.log(response.token);
         this.storageService.setData(ConstantesLocalStorage.token, response.token);
         this.router.navigate(["/loja"]);
         

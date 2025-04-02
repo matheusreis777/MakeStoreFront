@@ -1,4 +1,3 @@
 export const Urlproduto = {
-    Obter: 'produtos',
-    ObterCores: 'coresProduto',
+    Obter: '/produto',
 };

@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { LayoutComponent } from './shared/layout/layout.component';
 
 export const appRoutes: Route[] = [
   {
