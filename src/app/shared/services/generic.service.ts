@@ -20,6 +20,12 @@ export class GenericService<T> {
             .pipe(map(res => res));
     }
 
+    getItemsProdutos<T>(caminho: string): Observable<T> {
+        return this.http.get<T>(`${this.apiUrl}${caminho}`, { headers: Helpers.getHttpHeaders() })
+          .pipe(map(res => res as T)); // Cast explícito
+      }
+      
+
     listarResultados(caminho: any, filtro: any): Observable<ResultadoConsulta<T>> {
         return this.http.get<ResultadoConsulta<T>>(this.apiUrl + `${caminho}` + this.prepararParametros(filtro),
             { headers: Helpers.getHttpHeaders() });

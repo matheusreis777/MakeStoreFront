@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
@@ -7,7 +6,7 @@ import { StorageService } from '../../../shared/services/storage.service';
   standalone: true,
   templateUrl: './lista-compras.component.html',
   styleUrls: ['./lista-compras.component.scss'],
-  imports: [HeaderComponent],
+  imports: [],
 })
 export class ListaComprasComponent implements OnInit {
   token: string | undefined;

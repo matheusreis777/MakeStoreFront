@@ -1,1 +1,44 @@
-<app-header></app-header>
+<div class="container-produtos" *ngIf="totalProdutos > 0">
+  <h2 class="titulo">Lista de Produtos</h2>
+  <div class="row">
+    <div class="col-2">
+      <label>Marca</label>
+    </div>
+    <div class="col-2">
+      <label>Preço</label>
+    </div>
+    <div class="col-2">
+      <label>Categoria</label>
+    </div>
+    <div class="col-2">
+      <label>Tags</label>
+    </div>
+    <div class="col-2">
+      <button type="button" class="btn btn-primary">Limpar Filtros</button>
+    </div>
+  </div>
+  <div class="grid-container">
+    <div class="card" *ngFor="let item of produtosPaginados">
+      <div class="card-content" [ngClass]="{'opaco': item.price == '0.0'}">
+        <img
+          src="{{ item.api_featured_image }}"
+          alt="{{ item.name }}"
+          width="100px"
+          height="100px"
+        />
+        <div class="row" id="linha-itens-card">
+          <p style="margin-top: 20px">{{ item.name }}</p>
+          <p>{{ item.price }}</p>
+          <p>{{ item.brand }}</p>
+        </div>
+        <p style="color: brown; font-weight: 700;" *ngIf="item.price == '0.0'">Produto indisponível.</p>
+      </div>
+    </div>
+  </div>
+  <mat-paginator
+    [length]="totalProdutos"
+    [pageSize]="pageSize"
+    (page)="paginar($event)"
+  >
+  </mat-paginator>
+</div>
