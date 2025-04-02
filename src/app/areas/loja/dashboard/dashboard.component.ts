@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  token: string | undefined;
+  constructor(
+    private storage: StorageService
+  ) {
+    this.token = this.storage.getData('token');
+   }
 
   ngOnInit() {
+
   }
 
 }

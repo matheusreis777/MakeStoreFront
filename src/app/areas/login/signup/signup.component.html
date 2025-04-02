@@ -2,23 +2,42 @@
   <h2>Make Store</h2>
   <form [formGroup]="loginCadastrarForm" (ngSubmit)="onSubmit()">
     <div class="row">
+      <div class="form-group">
+        <label for="email">Nome</label>
+        <input type="text" id="nome" formControlName="nome" autocomplete="false" required />
+      </div>
+  </div>
+    <div class="row">
         <div class="form-group">
           <label for="email">E-mail</label>
           <input type="email" id="email" formControlName="email" autocomplete="false" required />
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
-          <label for="password">Senha</label>
-          <input type="password" id="password" formControlName="password" autocomplete="new-password" required />
-        </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" formControlName="senha" autocomplete="new-password" required />
+        <div *ngIf="senha?.errors?.['weakPassword'] && (senha?.dirty || senha?.touched)" class="error">
+          A senha deve ter: <br />
+           - no mínimo 8 caracteres, <br />
+           - uma letra maiúscula, <br />
+           - uma minúscula, <br />
+           - um número  <br />
+           - um caractere especial.
+        </div>        
+      </div>
     </div>
+    
     <div class="row">
-        <div class="form-group">
-          <label for="password">Confirmar Senha</label>
-          <input type="password" id="password" formControlName="password" autocomplete="new-password" required />
-        </div>
+      <div class="form-group">
+        <label for="password">Confirmar Senha</label>
+        <input type="password" id="confirmarSenha" formControlName="confirmarSenha" autocomplete="new-password" required />
+        <div *ngIf="loginCadastrarForm.hasError('passwordMismatch') && confirmarSenha?.touched" class="error">
+          As senhas não coincidem.
+        </div>        
+      </div>
     </div>
+    
     <button type="submit">Cadastrar</button>
   </form>
   <div class="register-link">
