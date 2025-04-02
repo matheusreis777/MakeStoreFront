@@ -1,0 +1,27 @@
+<div class="login-container">
+  <h2>Make Store</h2>
+  <form [formGroup]="loginCadastrarForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" formControlName="email" autocomplete="false" required />
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" formControlName="password" autocomplete="new-password" required />
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+          <label for="password">Confirmar Senha</label>
+          <input type="password" id="password" formControlName="password" autocomplete="new-password" required />
+        </div>
+    </div>
+    <button type="submit">Cadastrar</button>
+  </form>
+  <div class="register-link">
+    <p><a href="/login">Login</a></p>
+  </div>
+</div>

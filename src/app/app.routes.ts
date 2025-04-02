@@ -1,3 +1,14 @@
-import { Routes } from '@angular/router';
+import { Route } from '@angular/router';
 
-export const routes: Routes = [];
+export const appRoutes: Route[] = [
+  {
+    path: '',
+    redirectTo: 'login', 
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./areas/login/login.routes').then((m) => m.LOGIN_ROUTES),
+  },
+];
