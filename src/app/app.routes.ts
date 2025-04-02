@@ -13,7 +13,7 @@ export const appRoutes: Route[] = [
       import('./areas/login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
-    path: 'dashboard',
+    path: 'loja',
     loadChildren: () =>
       import('./areas/loja/loja.routes').then((m) => m.LOJA_ROUTES),
     canActivate: [AuthGuard]
