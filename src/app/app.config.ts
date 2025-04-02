@@ -13,8 +13,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideRouter(appRoutes),
     provideClientHydration(withEventReplay()),
-    provideAnimations(), // Habilita as animações do Angular
-    provideToastr(), // Configuração do ngx-toastr
+    provideAnimations(), 
+    provideToastr(), 
     StorageService,
   ],
 };

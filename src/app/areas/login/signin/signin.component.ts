@@ -39,7 +39,7 @@ export class SigninComponent implements OnInit {
         this.toastr.success('Login realizado com sucesso!', 'Sucesso!');
 
         this.storageService.setData(ConstantesLocalStorage.token, response.token);
-        this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/loja"]);
         
       },
       error: (erro) => {

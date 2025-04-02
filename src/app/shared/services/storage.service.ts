@@ -9,14 +9,10 @@ export class StorageService {
 
   private storage: Storage | undefined;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { 
-    if (isPlatformBrowser(this.platformId)) {
-      this.storage = window.localStorage; // Só inicializa no navegador
+  setData(key: string, value: string): void {
+    if (typeof window !== 'undefined') { 
+      localStorage.setItem(key, value);
     }
-  }
-
-  setData(nome: string, valor: string) {
-    localStorage.setItem(nome, valor);
   }
 
   getData(nome: string): string {
