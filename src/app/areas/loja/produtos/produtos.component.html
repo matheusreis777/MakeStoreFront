@@ -1,25 +1,47 @@
-<div class="container-produtos" *ngIf="totalProdutos > 0">
+<div *ngIf="loading" class="loading-overlay">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="container-produtos">
   <h2 class="titulo">Lista de Produtos</h2>
-  <div class="row">
-    <div class="col-2">
-      <label>Marca</label>
-    </div>
-    <div class="col-2">
-      <label>Preço</label>
-    </div>
-    <div class="col-2">
-      <label>Categoria</label>
-    </div>
-    <div class="col-2">
-      <label>Tags</label>
-    </div>
-    <div class="col-2">
-      <button type="button" class="btn btn-primary">Limpar Filtros</button>
-    </div>
+  <div class="row d-flex text-center flex-nowrap" style="padding: 0px 10px 0px 20px;">
+    <form [formGroup]="produtosForm" class="d-flex w-100 ">
+      <div class="col-2" style="margin-right: 10px;">
+        <div class="form-group">
+          <label for="marca">Marca</label>
+          <input type="text"  id="marca" formControlName="marca" autocomplete="off" required class="form-control"/>
+        </div>
+      </div>
+      <div class="col-2" style="margin-right: 10px;">
+        <div class="form-group">
+          <label for="preco">Preço</label>
+          <input type="text" id="preco" options="{ prefix: '$ ', thousands: '.', decimal: ',' }" formControlName="preco" autocomplete="off" required class="form-control"/>
+        </div>
+      </div>
+      <div class="col-2" style="margin-right: 10px;">
+        <div class="form-group">
+          <label for="categoria">Categoria</label>
+          <input type="text" id="categoria" formControlName="categoria" autocomplete="off" required class="form-control"/>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" formControlName="tags" autocomplete="off" required class="form-control"/>
+        </div>
+      </div>
+      <div class="col-2" style="margin-right: 10px;" style="padding: 24px;">
+        <button type="button" class="btn btn-primary" (click)="filtrar()">Filtrar</button>
+      </div>
+      <div class="col-2" style="margin-right: 10px;" style="padding: 24px;">
+        <button type="button" class="btn btn-danger" (click)="limparFiltros()">Limpar Filtros</button>
+      </div>
+    </form>
   </div>
-  <div class="grid-container">
-    <div class="card" *ngFor="let item of produtosPaginados">
-      <div class="card-content" [ngClass]="{'opaco': item.price == '0.0'}">
+  
+  <div class="grid-container" *ngIf="totalProdutos > 0">
+    <div class="card" *ngFor="let item of produtosFiltradosPaginados">
+      <div class="card-content" [ngClass]="{ opaco: item.price == '0.0' }" (click)="abrirModal(item)">
         <img
           src="{{ item.api_featured_image }}"
           alt="{{ item.name }}"
@@ -28,14 +50,18 @@
         />
         <div class="row" id="linha-itens-card">
           <p style="margin-top: 20px">{{ item.name }}</p>
-          <p>{{ item.price }}</p>
+          <p>{{ item.price | currency : "$"}}</p>
           <p>{{ item.brand }}</p>
+          <p>{{ item.category }}</p>
+          <p>{{ item.tag_list }}</p>
         </div>
-        <p style="color: brown; font-weight: 700;" *ngIf="item.price == '0.0'">Produto indisponível.</p>
+        <p style="color: brown; font-weight: 700" *ngIf="item.price == '0.0'">
+          Produto indisponível.
+        </p>
       </div>
     </div>
   </div>
-  <mat-paginator
+  <mat-paginator *ngIf="totalProdutos > 0"
     [length]="totalProdutos"
     [pageSize]="pageSize"
     (page)="paginar($event)"

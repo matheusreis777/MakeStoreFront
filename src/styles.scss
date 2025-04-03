@@ -7,39 +7,69 @@ body {
     align-items: center;
     height: 100vh;
     background: #223953;
+    padding: 16px; /* Adiciona um espaçamento para evitar cortes em telas pequenas */
 }
 
-mat-paginator{
-  background: transparent!important;
+/* Estilos para paginação */
+mat-paginator {
+  background: transparent !important;
 }
 
-
-// Componente de paginação
-.mat-mdc-paginator{
+.mat-mdc-paginator {
   background: transparent;
 }
 
 .mat-mdc-paginator-container {
-  justify-content: center!important;
+  justify-content: center !important;
 }
 
-.mat-mdc-button-touch-target:hover{
-  color: white!important;
+.mat-mdc-button-touch-target:hover {
+  color: white !important;
 }
 
-
+/* Estilização do conteúdo */
 .content-wrapper {
-  margin-top: 6%;
-  width: 80%;
-  min-height: 80vh; /* 80% da altura da viewport */
+  width: 90%;
+  max-width: 1200px;
+  min-height: 80vh; 
   background-color: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Adiciona um leve sombreamento */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 16px;
   display: flex;
   flex-direction: column;
+  flex: 1; 
+  padding-left: 10px;
+  margin: auto; 
+  margin-top: 5.5%; 
 }
 
+/* Ajuste para responsividade */
+@media (max-width: 1024px) {  /* Tablets e notebooks menores */
+  .content-wrapper {
+    width: 95%;
+    margin-top: 8%;
+  }
+}
+
+@media (max-width: 768px) {  /* Tablets pequenos */
+  .content-wrapper {
+    width: 98%;
+    margin-top: 10%;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {  /* Celulares */
+  .content-wrapper {
+    width: 100%;
+    margin-top: 12%;
+    padding: 10px;
+    min-height: auto; 
+  }
+}
+
+/* Ajuste do layout do formulário */
 .form-group {
     text-align: left;
     margin-bottom: 15px;
@@ -53,11 +83,12 @@ mat-paginator{
     }
 
     input {
-      height: 28px;
+      height: 40px;
       width: 100%;
-      font-size: 14px;
+      font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      padding: 8px;
       transition: 0.3s ease-in-out;
 
       &:focus {
@@ -66,9 +97,10 @@ mat-paginator{
         outline: none;
       }
     }
-  }
+}
 
-  button {
+/* Ajuste dos botões */
+button {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -82,5 +114,43 @@ mat-paginator{
     &:hover {
       background-color: #0056b3;
     }
+}
+
+/* Responsividade para inputs e botões */
+@media (max-width: 600px) {
+  .form-group input {
+    font-size: 14px;
+    height: 36px;
   }
-  
+
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Estilo para overlay de carregamento */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+mat-spinner {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+/* Melhorias para mobile */
+@media (max-width: 480px) {
+  body {
+    height: auto;
+  }
+}
