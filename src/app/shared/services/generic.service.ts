@@ -22,7 +22,7 @@ export class GenericService<T> {
 
     getItemsProdutos<T>(caminho: string): Observable<T> {
         return this.http.get<T>(`${this.apiUrl}${caminho}`, { headers: Helpers.getHttpHeaders() })
-          .pipe(map(res => res as T)); // Cast explícito
+          .pipe(map(res => res as T));
       }
       
 

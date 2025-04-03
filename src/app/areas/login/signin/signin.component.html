@@ -1,11 +1,7 @@
-<ngx-spinner
-  bdColor="rgba(0,0,0,0.4)"
-  size="medium"
-  color="#711919"
-  type="square-jelly-box"
-  [fullScreen]="true"
-  ><p style="color: rgb(28, 6, 6)">Loading...</p></ngx-spinner
->
+<div *ngIf="loading" class="loading-overlay">
+  <mat-spinner></mat-spinner>
+</div>
+
 <div class="login-container">
   <h2>Make Store</h2>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">

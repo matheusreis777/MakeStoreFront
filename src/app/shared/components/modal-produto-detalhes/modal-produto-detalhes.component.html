@@ -1,39 +1,41 @@
 <h2 mat-dialog-title>
   {{ produto.name }}
-  <button mat-icon-button class="close-button" (click)="dialogRef.close()" >
+  <button mat-icon-button class="close-button" (click)="dialogRef.close()">
     ✖
   </button>
 </h2>
 
 <mat-dialog-content class="mat-typography"> 
-  <div class="row">
-    <div class="col-4">
-      <img [src]="produto.api_featured_image" alt="{{ produto.name }}" width="160px" height="160px">
+  <form [formGroup]="produtoForm">
+    <div class="row">
+      <div class="col-4">
+        <img [src]="produto.api_featured_image" alt="{{ produto.name }}" width="160px" height="160px">
+      </div>
+      <div class="col-8">
+        <p><strong>Marca:</strong> {{ produto.brand }}</p>
+        <p><strong>Categoria:</strong> {{ produto.category }}</p>
+        <p><strong>Preço:</strong> {{ produto.price | currency : "$" }}</p>
+        <p><strong>Descrição:</strong> {{ produto.description }}</p>
+        <p><strong>Tipo:</strong> {{ produto.product_type }}</p>
+        <p><strong>Tags:</strong> {{ produto.tag_list?.join(', ') }}</p>
+        <a [href]="produto.product_link" target="_blank">Ver Produto</a>
+      </div>
     </div>
-    <div class="col-8">
-      <p><strong>Marca:</strong> {{ produto.brand }}</p>
-      <p><strong>Categoria:</strong> {{ produto.category }}</p>
-      <p><strong>Preço:</strong> {{ produto.price | currency : "$" }}</p>
-      <p><strong>Descrição:</strong> {{ produto.description }}</p>
-      <p><strong>Tipo:</strong> {{ produto.product_type }}</p>
-      <p><strong>Tags:</strong> {{ produto.tag_list?.join(', ') }}</p>
-      <a [href]="produto.product_link" target="_blank">Ver Produto</a>
-    </div>
-  </div>
 
-  <p>Cores Disponíveis</p>
-  <div class="colors-container">
-    <div 
-      *ngFor="let color of produto.product_colors" 
-      class="color-box" 
-      [ngStyle]="{'background-color': color.hex_value}" 
-      [title]="color.colour_name">
+    <p>Cores Disponíveis</p>
+    <div class="colors-container">
+      <div (click)="selecionarCor(color)"
+        *ngFor="let color of produto.product_colors" 
+        class="color-box" 
+        [ngStyle]="{'background-color': color.hex_value}" 
+        [title]="color.colour_name">
+      </div>
     </div>
-  </div>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button type="button" mat-raised-button class="btn btn-danger" [mat-dialog-close]="true">
+  <button type="button" class="btn btn-danger" (click)="salvarCarrinho()">
     Adicionar ao Carrinho
   </button>
 </mat-dialog-actions>
