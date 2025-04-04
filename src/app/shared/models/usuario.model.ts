@@ -1,5 +1,8 @@
+import { Produto } from "./produto.model";
+
 export class Usuario {
     nome!: string;
     email!: string;
-    senha!: string;
+    senhaHash!: string;
+    produtos: Produto[] = [];
 }

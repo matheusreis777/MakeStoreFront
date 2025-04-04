@@ -15,6 +15,10 @@ export const LOJA_ROUTES: Route[] = [
         loadComponent: () => import('./perfil/perfil.component').then(m => m.PerfilComponent),
       },
       {
+        path: 'carrinho',
+        loadComponent: () => import('./carrinho/carrinho.component').then(m => m.CarrinhoComponent),
+      },
+      {
         path: 'lista-compras',
         loadComponent: () => import('./lista-compras/lista-compras.component').then(m => m.ListaComprasComponent),
       },

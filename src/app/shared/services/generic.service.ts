@@ -20,6 +20,10 @@ export class GenericService<T> {
             .pipe(map(res => res));
     }
 
+    deleteItems(caminho: string) {
+        return this.http.delete(`${this.apiUrl}${caminho}`, { headers: Helpers.getHttpHeaders() });
+    }    
+
     getItemsProdutos<T>(caminho: string): Observable<T> {
         return this.http.get<T>(`${this.apiUrl}${caminho}`, { headers: Helpers.getHttpHeaders() })
           .pipe(map(res => res as T));
@@ -30,6 +34,14 @@ export class GenericService<T> {
         return this.http.get<ResultadoConsulta<T>>(this.apiUrl + `${caminho}` + this.prepararParametros(filtro),
             { headers: Helpers.getHttpHeaders() });
     }
+
+    listarCarrinho(caminho: any, filtro: any): Observable<ResultadoConsulta<T>> {
+        return this.http.get<ResultadoConsulta<T>>(
+            `${this.apiUrl}${caminho}?email=${encodeURIComponent(filtro[0])}`,
+            { headers: Helpers.getHttpHeaders() }
+        );
+    }
+    
 
     obterUnico(caminho: any, filtro: any): Observable<T> {
         return this.http.get<ResultadoConsulta<T>>(this.apiUrl + `${caminho}` + this.prepararParametros(filtro),

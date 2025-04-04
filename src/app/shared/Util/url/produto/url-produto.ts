@@ -1,4 +1,3 @@
-export const Urlproduto = {
-    Obter: '/produto',
-    SalvarCarrinho: '/produto/SalvarCarrinho',
+export const UrlProduto = {
+    Obter: '/make',
 };

@@ -14,7 +14,6 @@ import {
 } from '@angular/material/dialog';
 import { GenericService } from '../../services/generic.service';
 import { Produto } from '../../models/produto.model';
-import { Urlproduto } from '../../Util/url/produto/url-produto';
 import {
   FormControl,
   FormGroup,
@@ -22,6 +21,9 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { StorageService } from '../../services/storage.service';
+import { Usuario } from '../../models/usuario.model';
+import { UrlCarrinho } from '../../Util/url/carrinho/url-carrinho';
 
 @Component({
   selector: 'app-modal-produto-detalhes',
@@ -39,13 +41,16 @@ export class ModalProdutoDetalhesComponent {
   produto: any;
   produtoForm!: FormGroup;
   corSelecionada: string = '';
+  email!: string | null;
 
   constructor(
     public dialogRef: MatDialogRef<ModalProdutoDetalhesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private produtoService: GenericService<Produto>,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sotrageService: StorageService
   ) {
+    this.email = this.sotrageService.getData("email");
     this.produto = data;
   }
 
@@ -77,6 +82,9 @@ export class ModalProdutoDetalhesComponent {
       product_api_url: new FormControl(this.produto.product_api_url),
       api_featured_image: new FormControl(this.produto.api_featured_image),
       product_colors: new FormControl([]),
+      email: new FormControl(this.email),
+      usuarioId: new FormControl(),
+      quantidade: new FormControl(1),
     });
   }
 
@@ -88,15 +96,17 @@ export class ModalProdutoDetalhesComponent {
     var corSelecionada = this.produtoForm.value.product_colors;
     if (corSelecionada != null) {
       var model = this.produtoForm.value;
-
+      console.log(model);
       this.produtoService
-        .postItems(Urlproduto.SalvarCarrinho, model)
+        .postItems(UrlCarrinho.SalvarCarrinho, model)
         .subscribe(
-          (response) => {
+          (response: any) => {
+
             this.toastr.success('Produto adicionado ao carrinho!', 'Sucesso!');
             this.dialogRef.close();
           },
           (error) => {
+
             this.toastr.error(
               'Erro ao adicionar produto ao carrinho!',
               'Erro!'

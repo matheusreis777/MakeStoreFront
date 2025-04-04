@@ -2,7 +2,6 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../../shared/services/storage.service';
 import { GenericService } from '../../../shared/services/generic.service';
 import { Produto } from '../../../shared/models/produto.model';
-import { Urlproduto } from '../../../shared/Util/url/produto/url-produto';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
@@ -20,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { UrlProduto } from '../../../shared/Util/url/produto/url-produto';
 
 @Component({
   selector: 'app-produtos',
@@ -141,8 +141,6 @@ export class ProdutosComponent implements OnInit {
   categoryControl = new FormControl([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  private spinner = inject(MatProgressSpinnerModule);
-
   readonly dialog = inject(MatDialog);
 
   constructor(
@@ -182,10 +180,10 @@ export class ProdutosComponent implements OnInit {
   }
 
   carregarProdutos() {
-    this.loading = true; // Mostra o loading
+    this.loading = true; 
 
     this.produtoService
-      .getItemsProdutos<Produto[]>(Urlproduto.Obter)
+      .getItemsProdutos<Produto[]>(UrlProduto.Obter)
       .subscribe({
         next: (resultado) => {
           this.dataSource = resultado;
@@ -197,8 +195,6 @@ export class ProdutosComponent implements OnInit {
               this.dataSource.map((item) => item.category).filter((cat) => cat)
             )
           );
-
-          console.log(this.categoriaList);
         },
         error: (erro) => {
           this.loading = false;
@@ -226,10 +222,12 @@ export class ProdutosComponent implements OnInit {
   }
 
   abrirModal(item: any) {
-    if (item.price == '0.0') {
+    if (item.price == '0.0' ||  item.product_colors.length == 0) {
       this.toastr.warning('Produto indissponível!', 'Alerta!');
       return;
     }
+
+
 
     const dialogRef = this.dialog.open(ModalProdutoDetalhesComponent, {
       width: 'auto',

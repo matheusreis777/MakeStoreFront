@@ -1,0 +1,13 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel"><b>{{titulo}}</b></h3>
+      </div>
+      <div class="modal-body" [innerHTML]="mensagem" style="font-size: 16px;">        
+      </div>
+      <div class="modal-footer">        
+        <button  [mat-dialog-close]="false"  class="btn btn-danger" data-dismiss="modal">Não</button>  
+        <button  [mat-dialog-close]="true" class="btn btn-success">Sim</button>        
+      </div>
+    </div>
+</div>

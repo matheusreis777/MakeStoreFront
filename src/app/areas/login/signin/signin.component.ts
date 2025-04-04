@@ -9,6 +9,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import e from 'express';
 
 @Component({
   selector: 'app-signin',
@@ -51,6 +52,11 @@ export class SigninComponent implements OnInit {
         this.storageService.setData(
           ConstantesLocalStorage.token,
           response.token
+        );
+
+        this.storageService.setData(
+          ConstantesLocalStorage.email,
+          this.loginForm.value.email
         );
         this.router.navigate(['/loja']);
         this.loading = false;

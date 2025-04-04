@@ -133,7 +133,7 @@
           <p>{{ item.category }}</p>
           <p>{{ item.tag_list }}</p>
         </div>
-        <p style="color: brown; font-weight: 700" *ngIf="item.price == '0.0'">
+        <p style="color: brown; font-weight: 700" *ngIf="item.price == '0.0' || item.product_colors.length == 0">
           Produto indisponível.
         </p>
       </div>
@@ -146,4 +146,7 @@
     (page)="paginar($event)"
   >
   </mat-paginator>
+
+  <br>
+  <p style="font-size: 9px;">**Produtos indisponíveis, são produtos sem valor vinculado ou sem cor vinculada.</p>
 </div>

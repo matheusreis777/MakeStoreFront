@@ -1,0 +1,31 @@
+<div *ngIf="loading" class="loading-overlay">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="cart-container">
+  <h2>Meu Carrinho</h2>
+  <div class="cart-items">
+    <div class="cart-item" *ngFor="let item of carrinho">
+      <img [src]="item.api_featured_image" alt="Produto" />
+      <div class="item-info">
+        <h3>{{ item.name }}</h3>
+        <p>Quantidade: {{ item.quantidade }}</p>
+        <p>Preço: $ {{ item.price | number : "1.2-2" }}</p>
+       
+          <div         
+            class="color-box" 
+            [ngStyle]="{'background-color': item.product_colors.hex_value,}" >
+          </div>
+        <p>Cor: <span>{{item.product_colors.colour_name}}</span></p>
+
+        
+
+        <button (click)="removeItem(item)">Remover</button>
+      </div>
+    </div>
+  </div>
+  <div class="cart-summary">
+    <h3>Total: $ {{ calcularTotal() | number : "1.2-2" }}</h3>
+    <button class="checkout" (click)="finalizarComprar()">Finalizar Compra</button>
+  </div>
+</div>

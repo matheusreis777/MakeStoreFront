@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>
+  <h1>Finalizar Compra</h1>
+  <button mat-icon-button class="close-button" (click)="dialogRef.close()">
+    ✖
+  </button>
+</h2>
+
+<div class="cart-container" style="text-align: center;">
+  <h3>Valor Total: <span>{{valorTotal | currency : "$"}}</span></h3>
+  <mat-dialog-content class="mat-typography"> 
+    <label>Forma de Pamamento</label>
+    <select class="form-control" [(ngModel)]="tipoPagamento">
+      <option value="">Selecione</option>
+      <option *ngFor="let forma of tipoPagamento" [value]="forma">{{ forma }}</option>
+    </select>
+  </mat-dialog-content>
+</div>
+
+<mat-dialog-actions align="end">
+  <button type="button" class="btn btn-danger">
+    Confirmar Compra
+  </button>
+</mat-dialog-actions>
