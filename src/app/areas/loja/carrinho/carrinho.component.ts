@@ -25,6 +25,7 @@ export class CarrinhoComponent implements OnInit {
   valorTotal: number = 0; 
   carrinho: Carrinho[] = [];
 
+
   constructor(
     private carrinhoService: GenericService<Produto>,
     private storage: StorageService,
@@ -47,6 +48,7 @@ export class CarrinhoComponent implements OnInit {
       .subscribe({
         next: (resultado: any) => {
           this.carrinho = resultado;
+          console.log('Carrinho:', this.carrinho.length);
         },
         error: (erro) => {
           this.loading = false;
@@ -103,9 +105,18 @@ export class CarrinhoComponent implements OnInit {
     const dialog = this.dialog.open(FinalizarCompraComponent, {
       width: 'auto',
       data: {
+        email: this.email,
         valorTotal: this.valorTotal,
         data: this.carrinho,
       },
+    });
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.toastr.success('Compra realizada com sucesso!', 'Sucesso!');
+        this.obterCarrinho();
+      } else if (result === false) {
+        this.toastr.warning('Problema ao finalizar compra!, Tente novamente.', 'Atenção!');
+      } 
     });
   }
 }

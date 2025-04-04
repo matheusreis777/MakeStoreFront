@@ -50,7 +50,7 @@ export class ModalProdutoDetalhesComponent {
     private toastr: ToastrService,
     private sotrageService: StorageService
   ) {
-    this.email = this.sotrageService.getData("email");
+    this.email = this.sotrageService.getData('email');
     this.produto = data;
   }
 
@@ -85,6 +85,7 @@ export class ModalProdutoDetalhesComponent {
       email: new FormControl(this.email),
       usuarioId: new FormControl(),
       quantidade: new FormControl(1),
+      status: new FormControl('Pendente'),
     });
   }
 
@@ -94,19 +95,17 @@ export class ModalProdutoDetalhesComponent {
 
   salvarCarrinho() {
     var corSelecionada = this.produtoForm.value.product_colors;
-    if (corSelecionada != null) {
+    
+    if (corSelecionada.length > 0) {
       var model = this.produtoForm.value;
-      console.log(model);
       this.produtoService
         .postItems(UrlCarrinho.SalvarCarrinho, model)
         .subscribe(
-          (response: any) => {
-
+          (response) => {
             this.toastr.success('Produto adicionado ao carrinho!', 'Sucesso!');
             this.dialogRef.close();
           },
           (error) => {
-
             this.toastr.error(
               'Erro ao adicionar produto ao carrinho!',
               'Erro!'

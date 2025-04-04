@@ -4,6 +4,9 @@
 
 <div class="cart-container">
   <h2>Meu Carrinho</h2>
+
+  <h5 style="text-align: center ;" *ngIf="carrinho.length == 0">Carrinho vazio.</h5>
+
   <div class="cart-items">
     <div class="cart-item" *ngFor="let item of carrinho">
       <img [src]="item.api_featured_image" alt="Produto" />
@@ -24,8 +27,8 @@
       </div>
     </div>
   </div>
-  <div class="cart-summary">
+  <div class="cart-summary" *ngIf="carrinho.length > 0">
     <h3>Total: $ {{ calcularTotal() | number : "1.2-2" }}</h3>
-    <button class="checkout" (click)="finalizarComprar()">Finalizar Compra</button>
+    <button class="button btn-sm" (click)="finalizarComprar()">Finalizar Compra</button>
   </div>
 </div>

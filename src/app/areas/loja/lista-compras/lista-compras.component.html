@@ -1,0 +1,28 @@
+<div *ngIf="loading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+<div class="container">
+    <h2>Minhas Compras</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Valor</th>
+          <th>Forma de Pagamento</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compra of compras">
+          <td>{{ compra.dataCompra | date:"dd/MM/yyyy hh:mm" }}</td>
+          <td>{{ compra.valorTotal | currency:"$"}}</td>
+          <td>{{ compra.formaPagamento }}</td>
+          <td class="acoes">
+            <button (click)="removeItem(compra)" class="btn excluir">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

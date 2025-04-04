@@ -5,19 +5,23 @@
   </button>
 </h2>
 
-<div class="cart-container" style="text-align: center;">
-  <h3>Valor Total: <span>{{valorTotal | currency : "$"}}</span></h3>
   <mat-dialog-content class="mat-typography"> 
-    <label>Forma de Pamamento</label>
-    <select class="form-control" [(ngModel)]="tipoPagamento">
-      <option value="">Selecione</option>
-      <option *ngFor="let forma of tipoPagamento" [value]="forma">{{ forma }}</option>
+    <label>Forma de Pagamento</label>
+    <select class="form-control" [(ngModel)]="tipoPagamento" (click)="aoSelecionarTipoPaagamento()"> 
+      <option [ngValue]="null">Selecione aqui sua forma de pagamento</option>
+      <option *ngFor="let forma of formasPagamento" [ngValue]="forma">{{ forma }}</option>
     </select>
+    <p>Valor Total: <strong>{{valorTotal | currency : "$"}}</strong></p>
+    <div style="text-align: center; margin-top: 12px">
+      <img *ngIf="tipoPagamento === 'Pix'" src="https://img.vivaolinux.com.br/imagens/dicas/comunidade/qrcode_www.vivaolinux.com.br.png" alt="Pix" width="150" height="150">
+    </div>
+    
+
   </mat-dialog-content>
-</div>
+
 
 <mat-dialog-actions align="end">
-  <button type="button" class="btn btn-danger">
+  <button type="button" class="btn btn-danger btn-sm" (click)="finalizarCompra()">
     Confirmar Compra
   </button>
 </mat-dialog-actions>

@@ -8,10 +8,6 @@ export const LOJA_ROUTES: Route[] = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-      },
-      {
-        path: 'perfil',
         loadComponent: () => import('./perfil/perfil.component').then(m => m.PerfilComponent),
       },
       {

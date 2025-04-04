@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  
+    h2, h5, p {
+      text-align: center;
+      color: #4a4a4a;
+      font-weight: bold;
+    }
+  
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    h5, p {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+  

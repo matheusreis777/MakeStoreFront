@@ -1,0 +1,60 @@
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+  
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+  
+      th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+      }
+  
+      th {
+        background: #f4f4f4;
+        font-weight: bold;
+      }
+  
+      .acoes {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+    }
+  
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+  
+      &.ver {
+        background: #007bff;
+        color: white;
+      }
+  
+      &.excluir {
+        background: #dc3545;
+        color: white;
+      }
+  
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  
