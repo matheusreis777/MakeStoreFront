@@ -136,9 +136,9 @@ export class ProdutosComponent implements OnInit {
     'zorah biocosmetiques',
   ];
 
-  tagsControl = new FormControl([]);
-  brandsControl = new FormControl([]);
-  categoryControl = new FormControl([]);
+  tagsControl = new FormControl<string[]>([], { nonNullable: true });
+  brandsControl = new FormControl<string[]>([], { nonNullable: true });
+  categoryControl = new FormControl<string[]>([], { nonNullable: true });
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   readonly dialog = inject(MatDialog);
@@ -157,9 +157,7 @@ export class ProdutosComponent implements OnInit {
     this.construirFormulario();
   }
 
-  onSubmit() {
-    
-  }
+  onSubmit() {}
 
   construirFormulario() {
     this.produtosForm = this.fb.group({
@@ -180,7 +178,7 @@ export class ProdutosComponent implements OnInit {
   }
 
   carregarProdutos() {
-    this.loading = true; 
+    this.loading = true;
 
     this.produtoService
       .getItemsProdutos<Produto[]>(UrlProduto.Obter)
@@ -217,17 +215,14 @@ export class ProdutosComponent implements OnInit {
   }
 
   limparFiltros() {
-    this.produtosForm.reset();
-    this.filtrar();
+   this.construirFormulario()
   }
 
   abrirModal(item: any) {
-    if (item.price == '0.0' ||  item.product_colors.length == 0) {
+    if (item.price == '0.0' || item.product_colors.length == 0) {
       this.toastr.warning('Produto indissponível!', 'Alerta!');
       return;
     }
-
-
 
     const dialogRef = this.dialog.open(ModalProdutoDetalhesComponent, {
       width: 'auto',
@@ -240,31 +235,63 @@ export class ProdutosComponent implements OnInit {
   }
 
   filtrar() {
-    const filtro = this.produtosForm.value;
-
-    this.filteredDataSource = this.dataSource.filter((produto) => {
-      const brand = produto.brand ? produto.brand.toLowerCase() : '';
-      const category = produto.category ? produto.category.toLowerCase() : '';
-      const tags = produto.tag_list
-        ? produto.tag_list.map((tag) => tag.toLowerCase())
-        : [];
-
-      return (
-        (!filtro.marca || brand.includes(filtro.marca.toLowerCase())) &&
-        (!filtro.preco ||
-          produto.price.toString().includes(filtro.preco.toString())) &&
-        (!filtro.categoria ||
-          category.includes(filtro.categoria.toLowerCase())) &&
-        (!filtro.tags ||
-          tags.some((tag) => tag.includes(filtro.tags.toLowerCase())))
-      );
-    });
-
+    const marcasSelecionadas = this.brandsControl.value || [];
+    const categoriasSelecionadas = this.categoryControl.value || [];
+    const tagsSelecionadas = this.tagsControl.value || [];
+  
+    const precoInicialRaw = this.produtosForm.get('precoInicial')?.value || '';
+    const precoFinalRaw = this.produtosForm.get('precoFinal')?.value || '';
+  
+    const precoInicial =
+      parseFloat(precoInicialRaw.replace(/[^\d.-]+/g, '').replace(',', '.')) || 0;
+  
+    const precoFinal =
+      parseFloat(precoFinalRaw.replace(/[^\d.-]+/g, '').replace(',', '.')) ||
+      Number.MAX_SAFE_INTEGER;
+  
+    const filtrosVazios =
+      marcasSelecionadas.length === 0 &&
+      categoriasSelecionadas.length === 0 &&
+      tagsSelecionadas.length === 0 &&
+      !precoInicialRaw &&
+      !precoFinalRaw;
+  
+    // Se nenhum filtro for aplicado, retorna a lista completa
+    if (filtrosVazios) {
+      this.filteredDataSource = [...this.dataSource];
+    } else {
+      this.filteredDataSource = this.dataSource.filter((produto) => {
+        const preco = parseFloat(produto.price || '0');
+        const brand = (produto.brand || '').toLowerCase();
+        const categoria = (produto.category || '').toLowerCase();
+        const tagsProduto =
+          produto.tag_list?.map((tag) => tag.toLowerCase()) || [];
+  
+        const marcaValida =
+          marcasSelecionadas.length === 0 ||
+          marcasSelecionadas.includes(brand);
+  
+        const categoriaValida =
+          categoriasSelecionadas.length === 0 ||
+          categoriasSelecionadas.includes(categoria);
+  
+        const tagsValidas =
+          tagsSelecionadas.length === 0 ||
+          tagsSelecionadas.some((tag) =>
+            tagsProduto.includes(tag.toLowerCase())
+          );
+  
+        const precoValido = preco >= precoInicial && preco <= precoFinal;
+  
+        return marcaValida && categoriaValida && tagsValidas && precoValido;
+      });
+    }
+  
     this.totalProdutos = this.filteredDataSource.length;
-
-    // Verifica se o paginator está definido antes de chamar firstPage()
+  
     if (this.paginator) {
       this.paginator.firstPage();
     }
   }
+  
 }
